@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+  :root{
+    @apply text-slate-950
+  }
+  .link{
+    @apply text-slate-200 px-2 capitalize border-b border-slate-500/20 hover:bg-slate-200/10 hover:scale-105 py-2 flex gap-4
+  }
+}
