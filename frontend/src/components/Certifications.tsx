@@ -1,10 +1,18 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 
 const Certifications = () => {
-  const initialValues = {}
-  const onSubmit =  () =>{}
+  const initialValues = {
+    certificate:''
+  }
+  const onSubmit = async (values:any) =>{
+    try{
+      await axios.post('/certifications', values)
+    }catch(e){
+      console.log(e)
+    }
+  }
   return (
     <Formik
     initialValues={initialValues}

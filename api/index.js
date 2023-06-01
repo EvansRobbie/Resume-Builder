@@ -5,6 +5,9 @@ const Personal = require("./models/Personal");
 const Objective = require("./models/Objective");
 const Experience = require("./models/Experience");
 const Education = require("./models/Education");
+const Skills = require("./models/Skills");
+const Projects = require("./models/Projects");
+const Certification = require("./models/Certification");
 const app = express();
 require("dotenv").config();
 const port = 4000;
@@ -82,4 +85,41 @@ app.post("/api/education", async (req, res) => {
     res.status(500).json("Failed to post details");
   }
 });
+app.post("/api/skills", async (req, res) => {
+    const { content } = req.body;
+  
+    try {
+      const postData = await Skills.create({
+        content,
+      });
+      res.json(postData);
+    } catch (e) {
+      res.status(500).json("ailed to post details");
+    }
+  });
+  app.post("/api/projects", async (req, res) => {
+    const { title, description } = req.body;
+  
+    try {
+      const postData = await Projects.create({
+        title,
+        description
+      });
+      res.json(postData);
+    } catch (e) {
+      res.status(500).json("ailed to post details");
+    }
+  });
+  app.post("/api/certifications", async (req, res) => {
+    const { certificate } = req.body;
+  
+    try {
+      const postData = await Certification.create({
+        certificate
+      });
+      res.json(postData);
+    } catch (e) {
+      res.status(500).json("Failed to post details");
+    }
+  });
 app.listen(port);
