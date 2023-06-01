@@ -1,10 +1,23 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 
 const Reference = () => {
-  const initialValues = {}
-  const onSubmit = () => {}
+  const initialValues = {
+    name:'',
+    title:'',
+    companyName:'',
+    email:'',
+    phone:'',
+
+  }
+  const onSubmit = async (values:any) => {
+    try{
+      await axios.post('/reference', values)
+    }catch(e){
+      console.log(e)
+    }
+  }
   return (
     <Formik
     initialValues= {initialValues}
