@@ -1,11 +1,20 @@
-import React from 'react'
+import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { Form, Formik } from 'formik'
 
 const Education = () => {
-  const initialValues = {}
-  const onSubmit = () =>{
-
+  const initialValues = {
+    course:'',
+    school:'',
+    grade:'',
+    year:'',
+  }
+  const onSubmit = async (values:any) =>{
+    try{
+      await axios.post('/education', values)
+    }catch(e){
+      console.log(e)
+    }
   }
   return (  
     <Formik

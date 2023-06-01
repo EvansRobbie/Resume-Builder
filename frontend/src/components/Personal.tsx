@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 
 const Personal = () => {
@@ -12,9 +12,12 @@ const Personal = () => {
     linked: ''
 
   }
-  const onSubmit = (values:any) => {
-   
-    console.log(values)
+  const onSubmit = async (values:any) => {
+    try{
+      await axios.post('/personal', values)
+    }catch(e){
+      console.log(e)
+    }
   }
   return (
     <Formik

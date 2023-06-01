@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 
 const Objective = () => {
@@ -7,8 +7,12 @@ const Objective = () => {
     objective:''
   }
 
-  const onSubmit = (values:any) => {
-    
+  const onSubmit = async (values:any) => {
+    try{
+      await axios.post('/objective', values)
+    }catch(e){
+      console.log(e)
+    }
   }
   return (
     <Formik
