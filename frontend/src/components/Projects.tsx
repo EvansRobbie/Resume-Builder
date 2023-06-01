@@ -7,7 +7,7 @@ const Projects = () => {
     name: '',
 
   }
-  const onSubmit = (values) => console.log(values)
+  const onSubmit = (values:any) => console.log(values)
   return (
     <Formik
     initialValues= {initialValues}

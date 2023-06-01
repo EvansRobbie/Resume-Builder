@@ -1,4 +1,4 @@
-import {Link, useParams} from 'react-router-dom'
+import {Link, useParams, useHistory} from 'react-router-dom'
 import Personal from '../components/Personal'
 import Reference from '../components/Reference'
 import Objective from '../components/Objective'
@@ -8,10 +8,27 @@ import Education from '../components/Education'
 import Skills from '../components/Skills'
 import Projects from '../components/Projects'
 import Certifications from '../components/Certifications'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 const Home = () => {
     const [isOpen, setIsOpen] = useState(true)
     const {subpages} = useParams()
+        const [resumeData, setResumeData] = useState({})
+        useEffect(() => {
+            const storedData = localStorage.getItem('resumeData');
+            if (storedData) {
+              setResumeData(JSON.parse(storedData));
+            }
+          }, []);
+        
+          useEffect(() => {
+            localStorage.setItem('resumeData', JSON.stringify(resumeData));
+          }, [resumeData]);
+    const handleSubmit = (data:any) =>{
+        // Update the resume data base on the on the current section/subpage
+        setResumeData((prevData) =>({...prevData, data}))
+  
+    }
+    console.log(resumeData)
     const navLinks = (type:string) =>{
         let styles = 'link'
 
@@ -112,7 +129,7 @@ const Home = () => {
         </nav>
         <div className='w-full p-4 bg-gradient-to-bl from-transparent to-slate-950/30'>
    
-            {subpages === 'personal'? <Personal/>: subpages==='objective'? <Objective/>: subpages === 'work'? <Work/>:
+            {subpages === 'personal'? <Personal handleSubmit = {handleSubmit}/>: subpages==='objective'? <Objective handleSubmit={handleSubmit}/>: subpages === 'work'? <Work/>:
                 subpages==='experience'?<Experience/>: subpages === 'education'?<Education/>: subpages === 'skills'?<Skills/>:
                 subpages === 'projects'?<Projects/> : subpages === 'certifications'? <Certifications/> : subpages==='reference'?<Reference/> :''
             }

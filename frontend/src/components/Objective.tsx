@@ -7,7 +7,9 @@ const Objective = () => {
     objective:''
   }
 
-  const onSubmit = (values) => console.log(values)
+  const onSubmit = (values:any) => {
+    
+  }
   return (
     <Formik
     initialValues={initialValues}
