@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 const Index = () => {
     const [hover, setHover] = useState(false)
     
@@ -19,9 +20,9 @@ const Index = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                 </svg> } 
             </div>
-            <div className='group-hover:bg-slate-950 bg-gradient-to-r from-transparent to-slate-900 -ml-4 pl-6 pr-3 rounded-r-full py-2 duration-500 ease-in'>
+            <Link to ='/create-resume' className='group-hover:bg-slate-950 bg-gradient-to-r from-transparent to-slate-900 -ml-4 pl-6 pr-3 rounded-r-full py-2 duration-500 ease-in'>
                 <button className='text-slate-100 outline-none group-hover:text-slate-100 text-sm'>Build Resume</button>
-            </div>
+            </Link>
         </div>
         <div className='absolute top-0 left-0 bg-gradient-to-bl from-slate-900/50 to-transparent z-0 w-full h-screen '/>
     </div>
