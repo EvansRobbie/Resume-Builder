@@ -1,14 +1,35 @@
+import {useState, useEffect} from 'react'
 import { Formik, Form } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
+import { useParams } from 'react-router-dom'
 
 const Projects = () => {
-  const initialValues = {
+  const {subpages} = useParams()
+  const [initialValues, setInitialValues] = useState({
     title : '',
     description : '',
 
 
-  }
+  })
+  const [isEdit, setIsEdit] = useState(false)
+
+  useEffect(() =>{
+    if (subpages === 'projects'){
+      setIsEdit(true)
+      const fetchData = async () =>{
+        try {
+            const {data} = await axios.get('/projects')
+            setInitialValues(data)
+            // console.log(data)
+        } catch (e) {
+          console.log('Failed to fetch Projects details', e)
+          
+        }
+      }
+      fetchData()
+    }
+  }, [subpages])
   const onSubmit = async (values:any) => {
     try{
       await axios.post('/projects', values)
@@ -20,6 +41,7 @@ const Projects = () => {
     <Formik
     initialValues= {initialValues}
     onSubmit={onSubmit}
+    enableReinitialize={true}
     >
         <Form className='flex flex-col gap-4'>
             <FormikControl

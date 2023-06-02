@@ -1,9 +1,15 @@
+import {useState, useEffect} from 'react'
 import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
+import { useParams } from 'react-router-dom'
 
 const Personal = () => {
-  const initialValues = {
+ const {subpages} = useParams()
+//  console.log(params)
+const [isEdit, setIsEdit] = useState(false)
+// const [ready, set]
+  const [initialValues, setinitialValues] = useState ({
     name: '',
     email:'',
     address: '',
@@ -11,18 +17,38 @@ const Personal = () => {
     website: '',
     linked: ''
 
-  }
+  })
+  useEffect(() =>{
+    if (subpages === 'personal'){
+
+      setIsEdit(true)
+      const fetchData = async () =>{
+        try{
+          const {data} = await axios.get('/personal')
+          setinitialValues(data)
+          
+        }catch(e){
+          console.log('Failed to fetch personal Data', e)
+        }
+      }
+      fetchData()
+    }
+  }, [subpages])
   const onSubmit = async (values:any) => {
     try{
       await axios.post('/personal', values)
+      setIsEdit(true)
     }catch(e){
       console.log(e)
     }
   }
+  // console.log(isEdit)
   return (
+    // enable initialize helps in pupulating the data that is in the db in the input fields for editing
     <Formik
     initialValues= {initialValues}
     onSubmit={onSubmit}
+    enableReinitialize={true}
     className='py-4'
     >
         <Form className='w-full flex flex-col gap-6'>
@@ -71,7 +97,7 @@ const Personal = () => {
                 placeholder= 'www.linkedin/janedoe.com'
             />
             <div className=' button'>
-              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Save</button>
+              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'update' : 'save'}</button>
             </div>
         </Form>
     </Formik>
