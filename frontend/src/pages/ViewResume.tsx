@@ -8,8 +8,8 @@ interface resumeProps {
     email: string;
     address: string;
     phone: string;
-    website: string;
-    linked: string;
+    website?: string;
+    linked?: string;
   }[];
   objective: {
     objective: string;
@@ -41,7 +41,7 @@ interface resumeProps {
     name: string;
     title: string;
     companyName: string;
-    email: string;
+    email?: string;
     phone: string;
   }[];
 }
@@ -52,8 +52,11 @@ const [isLoading, setIsLoading] = useState(false)
     const fetchData = async () => {
         setIsLoading(true)
       const { data } = await axios.get("/resume");
-      setResumeData(data);
-      setIsLoading(false)
+      if (data){
+        setResumeData(data);
+        setIsLoading(false)
+
+      }
     };
     
     fetchData();
@@ -77,7 +80,7 @@ const [isLoading, setIsLoading] = useState(false)
 
         </div>
         <div className="max-w-3xl mx-auto " id="resume">
-            {resumeData?.personal && (
+            {resumeData?.personal && resumeData?.personal.length > 0 && (
                 <div className="flex flex-col items-center py-8">
                 <h1 className="text-2xl font-bold uppercase m-0">
                     {resumeData?.personal[0].name}
@@ -105,7 +108,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
             )}
 
-            {resumeData?.objective && (
+            {resumeData?.objective &&resumeData?.objective.length > 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">objective</h1>
@@ -115,7 +118,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
                 </div>
             )}
-            {resumeData?.experience && (
+            {resumeData?.experience && resumeData?.experience.length > 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">Experience</h1>
@@ -132,7 +135,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
                 </div>
             )}
-            {resumeData?.education && (
+            { resumeData?.education && resumeData?.education?.length > 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">Education</h1>
@@ -149,7 +152,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
                 </div>
             )}
-            {resumeData?.skills && (
+            {resumeData?.skills && resumeData?.skills.length > 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">Skills</h1>
@@ -159,7 +162,7 @@ const [isLoading, setIsLoading] = useState(false)
                 {/* </div> */}
                 </div>
             )}
-            {resumeData?.projects && (
+            {resumeData?.projects && resumeData?.projects.length > 0 && (
                 <div>
                 <div className="heading-bg ">
                     <h1 className="h1">Projects</h1>
@@ -170,7 +173,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
                 </div>
             )}
-            {resumeData?.certification && (
+            {resumeData?.certification && resumeData?.certification.length > 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">certifications & Achievements</h1>
@@ -180,7 +183,7 @@ const [isLoading, setIsLoading] = useState(false)
                 </div>
                 </div>
             )}
-            {resumeData?.reference && (
+            {resumeData?.reference && resumeData?.reference.length> 0 && (
                 <div>
                 <div className="heading-bg">
                     <h1 className="h1">Reference</h1>

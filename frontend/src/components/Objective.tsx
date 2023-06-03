@@ -18,14 +18,18 @@ useEffect(() =>{
 
       const fetchData =  async () =>{ 
           const {data} =  await axios.get('/objective')
-          setInitialValues(data)
+          if(data){
+            setInitialValues(data)
+            setIsEdit(true)
+          }
       }
       fetchData()
   }
 }, [subpages])
-  const onSubmit = async (values:any) => {
+  const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
       await axios.post('/objective', values)
+      onSubmitProps.resetForm()
     }catch(e){
       console.log(e)
     }

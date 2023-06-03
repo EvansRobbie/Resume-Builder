@@ -1,9 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "./Button";
 import { Form, Formik } from "formik";
 import FormikControl from "../forms/FormikControl";
+import { useResumeContext } from "../context/ResumeContext";
 // import Button from "./Button"
 // import { useUserContext } from '../context/UserContext'
 
@@ -16,9 +16,9 @@ const Login = ({
 }) => {
   //   const [username, setUsername] = useState('')
   //   const [password, setPassword] = useState('')
-  //   const {setUser} = useUserContext()
+    const {setUser} = useResumeContext()
   const navigate = useNavigate();
-
+    const {user} = useResumeContext()
   const initialValues = {
     username: "",
     password: "",
@@ -26,9 +26,9 @@ const Login = ({
   const onSubmit = async (values: any) => {
     // e.preventDefault()
         try{
-        await  axios.post('/login', values)
-    //       setUser(data)
-    //       navigate('/')
+        const {data} = await  axios.post('/login', values)
+          setUser(data)
+          navigate('/')
           setLoginModal(false)
         }catch(e){
           alert('Login Failed')
@@ -54,6 +54,7 @@ const Login = ({
           label="Password"
           placeholder="password"
         />
+       
         <div className=' button'>
             <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Login</button>
         </div>

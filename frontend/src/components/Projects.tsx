@@ -20,7 +20,10 @@ const Projects = () => {
       const fetchData = async () =>{
         try {
             const {data} = await axios.get('/projects')
-            setInitialValues(data)
+            if(data){
+              setInitialValues(data)
+              setIsEdit(true)
+            }
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Projects details', e)
@@ -30,9 +33,10 @@ const Projects = () => {
       fetchData()
     }
   }, [subpages])
-  const onSubmit = async (values:any) => {
+  const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
       await axios.post('/projects', values)
+      onSubmitProps.resetForm()
     }catch(e){
       console.log(e)
     }
@@ -58,7 +62,7 @@ const Projects = () => {
             />
 
             <div className='button'>
-              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Save</button>
+              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'update' : 'save'}</button>
             </div>
         </Form>
     </Formik>

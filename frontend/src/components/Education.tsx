@@ -2,10 +2,11 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { Form, Formik } from 'formik'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Education = () => {
   const {subpages} = useParams()
+  const navigate = useNavigate()
   const [initialValues, setInitialValues] = useState({
     course:'',
     school:'',
@@ -16,11 +17,14 @@ const Education = () => {
 
   useEffect(() =>{
     if (subpages === 'education'){
-      setIsEdit(true)
+      
       const fetchData = async () =>{
         try {
             const {data} = await axios.get('/education')
-            setInitialValues(data)
+            if(data){
+              setInitialValues(data)
+              setIsEdit(true)
+            }
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Education details', e)
@@ -30,9 +34,13 @@ const Education = () => {
       fetchData()
     }
   }, [subpages])
-  const onSubmit = async (values:any) =>{
+  // console.log(initialValues)
+  const onSubmit = async (values:any, onSubmitProps:any) =>{
     try{
       await axios.post('/education', values)
+      onSubmitProps.resetForm()
+      navigate('/create-resume')
+      setIsEdit(true)
     }catch(e){
       console.log(e)
     }
@@ -77,7 +85,7 @@ const Education = () => {
                 placeholder= '2011 - 2015'
             />
             <div className=' button'>
-              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Save</button>
+              <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'Update': 'save'}</button>
             </div>
         </Form>
     </Formik>

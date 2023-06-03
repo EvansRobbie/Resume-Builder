@@ -2,14 +2,15 @@ import {useState, useEffect} from 'react'
 import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Personal = () => {
  const {subpages} = useParams()
+ const navigate = useNavigate()
 //  console.log(params)
 const [isEdit, setIsEdit] = useState(false)
 // const [ready, set]
-  const [initialValues, setinitialValues] = useState ({
+  const [initialValues, setInitialValues] = useState ({
     name: '',
     email:'',
     address: '',
@@ -21,11 +22,13 @@ const [isEdit, setIsEdit] = useState(false)
   useEffect(() =>{
     if (subpages === 'personal'){
 
-      setIsEdit(true)
       const fetchData = async () =>{
         try{
           const {data} = await axios.get('/personal')
-          setinitialValues(data)
+          if(data){
+            setInitialValues(data)
+            setIsEdit(true)
+          }
           
         }catch(e){
           console.log('Failed to fetch personal Data', e)
@@ -34,10 +37,11 @@ const [isEdit, setIsEdit] = useState(false)
       fetchData()
     }
   }, [subpages])
-  const onSubmit = async (values:any) => {
+  const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
       await axios.post('/personal', values)
-      setIsEdit(true)
+      onSubmitProps.resetForm()
+      navigate('/create-resume')
     }catch(e){
       console.log(e)
     }

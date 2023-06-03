@@ -13,11 +13,13 @@ const Certifications = () => {
 
   useEffect(() =>{
     if (subpages === 'certifications'){
-      setIsEdit(true)
       const fetchData = async () =>{
         try {
             const {data} = await axios.get('/certification')
-            setInitialValues(data)
+            if(data){
+              setInitialValues(data)
+              setIsEdit(true)
+            }
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Certification details', e)
@@ -27,9 +29,10 @@ const Certifications = () => {
       fetchData()
     }
   }, [subpages])
-  const onSubmit = async (values:any) =>{
+  const onSubmit = async (values:any, onSubmitProps:any) =>{
     try{
       await axios.post('/certifications', values)
+      onSubmitProps.resetForm()
     }catch(e){
       console.log(e)
     }

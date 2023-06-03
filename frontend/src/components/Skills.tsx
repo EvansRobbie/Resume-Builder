@@ -9,11 +9,13 @@ const Skills = () => {
   const [isEdit, setIsEdit] = useState(false)
   useEffect(() =>{
     if (subpages === 'skills'){
-      setIsEdit(true)
       const fetchData = async () =>{
         try {
             const {data} = await axios.get('/skills')
-            setContent(data.content)
+            if (data){
+              setContent(data.content)
+              setIsEdit(true)
+            }
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Skills details', e)
@@ -27,6 +29,7 @@ const Skills = () => {
       e.preventDefault()
       try{
         await axios.post('/skills', {content})
+        setContent('')
       }catch(e){
         console.log(e)
       }

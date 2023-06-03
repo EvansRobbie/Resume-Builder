@@ -2,11 +2,16 @@ const {Schema, model} = require('mongoose')
 
 const ReferenceSchema = new Schema({
     user:{type:Schema.Types.ObjectId, require:true},
-    name:{type:String},
-    title:{type:String},
-    companyName:{type:String},
-    email:{type:String},
-    phone:{type:String}, 
+    referees:[
+        {
+
+            name:{type:String},
+            title:{type:String},
+            companyName:{type:String},
+            email:{type:String},
+            phone:{type:String}, 
+        }
+    ]
    
 
 })

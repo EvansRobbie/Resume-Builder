@@ -6,10 +6,10 @@ import ResumeContextProvider from './context/ResumeContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
+    <Router>
     <ResumeContextProvider>
-      <Router>
         <App />
-      </Router>
     </ResumeContextProvider>
+    </Router>
   </React.StrictMode>,
 )

@@ -22,7 +22,10 @@ useEffect(() =>{
     const fetchData = async () =>{
       try {
           const {data} = await axios.get('/experience')
-          setInitialValues(data)
+          if(data){
+            setInitialValues(data)
+            setIsEdit(true)
+          }
           // console.log(data)
       } catch (e) {
         console.log('Failed to fetch Experience details', e)
@@ -33,9 +36,10 @@ useEffect(() =>{
   }
 }, [subpages])
 // console.log(initialValues)
-  const onSubmit = async (values:any) => {
+  const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
       await axios.post('/experience', values)
+      onSubmitProps.resetForm()
     }catch(e){
       console.log(e)
     }

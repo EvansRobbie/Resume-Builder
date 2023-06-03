@@ -74,6 +74,25 @@ app.get("/api/test", (req, res) => {
       res.json('User Details Not Found')
     }
  })
+ app.get("/api/profile", (req, res) => {
+  // mongoose.connect(process.env.MONGO_URL);
+  const { token } = req.cookies;
+  // res.json({token})
+  if (token) {
+    // try and verify the token
+    jwt.verify(token, jwtSecret, {}, async (err, user) => {
+      if (err) throw err;
+     const {username, email, _id} = await User.findById(user.id)
+      res.json({username, email, _id});
+    });
+  } else {
+    res.json(null);
+  }
+});
+app.post('/api/logout', (req, res) =>{
+  res.cookie('token', '').json(true)
+
+})
 // Post details to the database
 app.post("/api/personal", async (req, res) => {
   // get token to verify the user
@@ -112,7 +131,7 @@ app.post("/api/objective", async (req, res) => {
   }
 });
 app.post("/api/experience", async (req, res) => {
-  const userData = getUserDataFromToken(req)
+  const userData = await getUserDataFromToken(req)
   const { companyName, jobTitle, start, end, details } = req.body;
 
   try {
@@ -130,7 +149,8 @@ app.post("/api/experience", async (req, res) => {
   }
 });
 app.post("/api/education", async (req, res) => {
-  const userData = getUserDataFromToken(req)
+  const userData = await getUserDataFromToken(req)
+  // res.json(userData)
   const { course, school, grade, year } = req.body;
 
   try {
@@ -147,7 +167,7 @@ app.post("/api/education", async (req, res) => {
   }
 });
 app.post("/api/skills", async (req, res) => {
-  const userData = getUserDataFromToken(req)
+  const userData = await getUserDataFromToken(req)
     const { content } = req.body;
   
     try {
@@ -161,7 +181,7 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/projects", async (req, res) => {
-    const userData = getUserDataFromToken(req)
+    const userData = await getUserDataFromToken(req)
     const { title, description } = req.body;
   
     try {
@@ -176,7 +196,7 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/certifications", async (req, res) => {
-    const userData = getUserDataFromToken(req)
+    const userData = await getUserDataFromToken(req)
     const { certificate } = req.body;
   
     try {
@@ -190,17 +210,13 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/reference", async (req, res) => {
-    const userData = getUserDataFromToken(req)
-    const { name, title, companyName, email, phone,} = req.body;
-  
+    const userData = await getUserDataFromToken(req)
+    const { referees} = req.body;
+    // res.json(referees)
     try {
       const postData = await Reference.create({
         user:userData.id,
-        name,
-        title,
-        companyName,
-        email,
-        phone,
+          referees
       });
       res.json(postData);
     } catch (e) {
@@ -276,6 +292,7 @@ app.get('/api/experience', async (req, res) =>{
 })
 app.get('/api/education', async (req, res) =>{
   const userData =  await getUserDataFromToken(req)
+  // res.json(userData.id)
   try{
     const education = await Education.findOne({user: userData.id})
     res.json(education)
@@ -331,6 +348,12 @@ app.get('/api/referee', async (req, res) =>{
 })
 
 // Edit details and update them to Mongo Atlas DB
-
+app.put('/api/personal', async (req, res) =>{
+    const userData = await getUserDataFromToken(req)
+    const {id, name, email, address, phone, website, linked } = req.body;
+    try{
+      const personal = await Personal.update
+    }
+})
 // Post details for AI prompt to generate a resume Sample
 app.listen(port);
