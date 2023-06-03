@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const EducationSchema = new Schema({
+    user:{type:Schema.Types.ObjectId, require:true},
     course:{type:String},
     school:{type:String},
     grade:{type:String},

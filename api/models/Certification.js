@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const CertificationSchema = new Schema({
+    user:{type:Schema.Types.ObjectId, require:true},
     certificate:{type:String},
     
 

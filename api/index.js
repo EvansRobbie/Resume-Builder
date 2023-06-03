@@ -46,7 +46,14 @@ app.get("/api/test", (req, res) => {
     }
 
  })
-
+ const getUserDataFromToken = (req) =>{
+  return new Promise((resolve, reject) =>{
+    jwt.verify(req.cookies.token, jwtSecret, {}, (e, userData) =>{
+      if (e) throw(e);
+      resolve(userData)
+    })
+  })
+ }
  app.post('/api/login', async (req, res) =>{
     const {username, password} = req.body
     const userData = await User.findOne({username})
@@ -69,28 +76,35 @@ app.get("/api/test", (req, res) => {
  })
 // Post details to the database
 app.post("/api/personal", async (req, res) => {
+  // get token to verify the user
+  const {token} = req.cookies
   const { name, email, address, phone, website, linked } = req.body;
+  jwt.verify(token, jwtSecret, { }, async (e, user) =>{
+    if (e) throw e;
+    try {
+      const postData = await Personal.create({
+        user:user.id,
+        name,
+        email,
+        address,
+        phone,
+        website,
+        linked,
+      });
+      res.json(postData);
+    } catch (e) {
+      res.status(500).json("ailed to post details");
+    }
 
-  try {
-    const postData = await Personal.create({
-      name,
-      email,
-      address,
-      phone,
-      website,
-      linked,
-    });
-    res.json(postData);
-  } catch (e) {
-    res.status(500).json("ailed to post details");
-  }
+  })
 });
 app.post("/api/objective", async (req, res) => {
+  const userData = await getUserDataFromToken(req)
   const { objective } = req.body;
 
   try {
     const postData = await Objective.create({
-      objective,
+      objective, user:userData.id
     });
     res.json(postData);
   } catch (e) {
@@ -98,10 +112,12 @@ app.post("/api/objective", async (req, res) => {
   }
 });
 app.post("/api/experience", async (req, res) => {
+  const userData = getUserDataFromToken(req)
   const { companyName, jobTitle, start, end, details } = req.body;
 
   try {
     const postData = await Experience.create({
+      user:userData.id,
       companyName,
       jobTitle,
       start,
@@ -114,10 +130,12 @@ app.post("/api/experience", async (req, res) => {
   }
 });
 app.post("/api/education", async (req, res) => {
+  const userData = getUserDataFromToken(req)
   const { course, school, grade, year } = req.body;
 
   try {
     const postData = await Education.create({
+      user:userData.id,
       course,
       school,
       grade,
@@ -129,10 +147,12 @@ app.post("/api/education", async (req, res) => {
   }
 });
 app.post("/api/skills", async (req, res) => {
+  const userData = getUserDataFromToken(req)
     const { content } = req.body;
   
     try {
       const postData = await Skills.create({
+        user:userData.id,
         content,
       });
       res.json(postData);
@@ -141,10 +161,12 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/projects", async (req, res) => {
+    const userData = getUserDataFromToken(req)
     const { title, description } = req.body;
   
     try {
       const postData = await Projects.create({
+        user:userData.id,
         title,
         description
       });
@@ -154,10 +176,12 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/certifications", async (req, res) => {
+    const userData = getUserDataFromToken(req)
     const { certificate } = req.body;
   
     try {
       const postData = await Certification.create({
+        user:userData.id,
         certificate
       });
       res.json(postData);
@@ -166,10 +190,12 @@ app.post("/api/skills", async (req, res) => {
     }
   });
   app.post("/api/reference", async (req, res) => {
+    const userData = getUserDataFromToken(req)
     const { name, title, companyName, email, phone,} = req.body;
   
     try {
       const postData = await Reference.create({
+        user:userData.id,
         name,
         title,
         companyName,
@@ -183,15 +209,16 @@ app.post("/api/skills", async (req, res) => {
   });
 // Fetch all Details for the resume Download
   app.get('/api/resume', async (req, res) =>{
+    const userData =  await getUserDataFromToken(req)
     try{
-        const personal = await Personal.find()
-        const objective = await Objective.find()
-        const experience = await Experience.find()
-        const education = await Education.find()
-        const skills = await Skills.find()
-        const projects = await Projects.find()
-        const certification = await Certification.find()
-        const reference = await Reference.find()
+        const personal = await Personal.find({user: userData.id})
+        const objective = await Objective.find({user: userData.id})
+        const experience = await Experience.find({user: userData.id})
+        const education = await Education.find({user: userData.id})
+        const skills = await Skills.find({user: userData.id})
+        const projects = await Projects.find({user: userData.id})
+        const certification = await Certification.find({user: userData.id})
+        const reference = await Reference.find({user: userData.id})
 
         const resumeData = {
             personal,
@@ -215,8 +242,9 @@ app.post("/api/skills", async (req, res) => {
 
   // Fetch details from the database for edit purposes
 app.get('/api/personal', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const personal = await Personal.findOne()
+    const personal = await Personal.findOne({user: userData.id})
     res.json(personal)
   }
   catch(e){
@@ -225,8 +253,9 @@ app.get('/api/personal', async (req, res) =>{
   }
 })
 app.get('/api/objective', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const objective = await Objective.findOne()
+    const objective = await Objective.findOne({user: userData.id})
     res.json(objective)
   }
   catch(e){
@@ -235,8 +264,9 @@ app.get('/api/objective', async (req, res) =>{
   }
 })
 app.get('/api/experience', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const experience = await Experience.findOne()
+    const experience = await Experience.findOne({user: userData.id})
     res.json(experience)
   }
   catch(e){
@@ -245,8 +275,9 @@ app.get('/api/experience', async (req, res) =>{
   }
 })
 app.get('/api/education', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const education = await Education.findOne()
+    const education = await Education.findOne({user: userData.id})
     res.json(education)
   }
   catch(e){
@@ -255,8 +286,9 @@ app.get('/api/education', async (req, res) =>{
   }
 })
 app.get('/api/skills', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const skills = await Skills.findOne()
+    const skills = await Skills.findOne({user: userData.id})
     res.json(skills)
   }
   catch(e){
@@ -265,8 +297,9 @@ app.get('/api/skills', async (req, res) =>{
   }
 })
 app.get('/api/projects', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const projects = await Projects.findOne()
+    const projects = await Projects.findOne({user: userData.id})
     res.json(projects)
   }
   catch(e){
@@ -275,8 +308,9 @@ app.get('/api/projects', async (req, res) =>{
   }
 })
 app.get('/api/certification', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const certification = await Certification.findOne()
+    const certification = await Certification.findOne({user: userData.id})
     res.json(certification)
   }
   catch(e){
@@ -285,8 +319,9 @@ app.get('/api/certification', async (req, res) =>{
   }
 })
 app.get('/api/referee', async (req, res) =>{
+  const userData =  await getUserDataFromToken(req)
   try{
-    const referee = await Reference.findOne()
+    const referee = await Reference.findOne({user: userData.id})
     res.json(referee)
   }
   catch(e){

@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const ExperienceSchema = new Schema({
+    user:{type:Schema.Types.ObjectId, require:true},
     companyName:{type:String},
     jobTitle:{type:String},
     start:{type:String},

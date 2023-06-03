@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const ReferenceSchema = new Schema({
+    user:{type:Schema.Types.ObjectId, require:true},
     name:{type:String},
     title:{type:String},
     companyName:{type:String},
