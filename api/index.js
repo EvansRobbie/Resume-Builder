@@ -132,16 +132,12 @@ app.post("/api/objective", async (req, res) => {
 });
 app.post("/api/experience", async (req, res) => {
   const userData = await getUserDataFromToken(req)
-  const { companyName, jobTitle, start, end, details } = req.body;
+  const {experiences} = req.body;
 
   try {
     const postData = await Experience.create({
       user:userData.id,
-      companyName,
-      jobTitle,
-      start,
-      end,
-      details,
+      experiences
     });
     res.json(postData);
   } catch (e) {
@@ -151,15 +147,12 @@ app.post("/api/experience", async (req, res) => {
 app.post("/api/education", async (req, res) => {
   const userData = await getUserDataFromToken(req)
   // res.json(userData)
-  const { course, school, grade, year } = req.body;
+  const { education } = req.body;
 
   try {
     const postData = await Education.create({
       user:userData.id,
-      course,
-      school,
-      grade,
-      year,
+      education
     });
     res.json(postData);
   } catch (e) {
@@ -182,13 +175,12 @@ app.post("/api/skills", async (req, res) => {
   });
   app.post("/api/projects", async (req, res) => {
     const userData = await getUserDataFromToken(req)
-    const { title, description } = req.body;
+    const { project } = req.body;
   
     try {
       const postData = await Projects.create({
         user:userData.id,
-        title,
-        description
+        project
       });
       res.json(postData);
     } catch (e) {
@@ -382,12 +374,12 @@ app.put('/api/objective', async (req, res) =>{
 })
 app.put('/api/experience', async (req, res) =>{
   const userData = await getUserDataFromToken(req)
-  const { companyName, jobTitle, start, end, details } = req.body;
+  const { experiences } = req.body;
   // console.log({user})
   try{
     const experience = await Experience.findOneAndUpdate({
       user:userData.id,
-      companyName, jobTitle, start, end, details,
+      experiences,
       new: true
    } )
     res.json(experience)
@@ -398,12 +390,12 @@ app.put('/api/experience', async (req, res) =>{
 })
 app.put('/api/education', async (req, res) =>{
   const userData = await getUserDataFromToken(req)
-  const { course, school, grade, year } = req.body;
+  const { education } = req.body;
   // console.log({user})
   try{
     const education = await Education.findOneAndUpdate({
       user:userData.id,
-      course, school, grade, year,
+      education,
       new: true
    } )
     res.json(education)
@@ -430,12 +422,12 @@ app.put('/api/skills', async (req, res) =>{
 })
 app.put('/api/projects', async (req, res) =>{
   const userData = await getUserDataFromToken(req)
-  const { title, description } = req.body;
+  const { project } = req.body;
   // console.log({user})
   try{
     const projects = await Projects.findOneAndUpdate({
       user:userData.id,
-      title, description,
+      project,
       new: true
    } )
     res.json(projects)

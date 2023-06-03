@@ -15,34 +15,46 @@ interface resumeProps {
     objective: string;
   }[];
   experience: {
-    companyName: string;
-    jobTitle: string;
-    start: string;
-    end: string;
-    details: string;
+    experiences:{
+      companyName: string;
+      jobTitle: string;
+      start: string;
+      end: string;
+      details: string;
+
+    }[]
   }[];
   education: {
-    course: string;
-    school: string;
-    grade: string;
-    year: string;
+    education:{
+      course: string;
+      school: string;
+      grade: string;
+      year: string;
+
+    }[]
   }[];
   skills: {
     content: string;
   }[];
   projects: {
-    title: string;
-    description: string;
+    project:{
+
+      title: string;
+      description: string;
+    }[]
   }[];
   certification: {
     certificate: string;
   }[];
   reference: {
-    name: string;
-    title: string;
-    companyName: string;
-    email?: string;
-    phone: string;
+    referees:{
+      name: string;
+      title: string;
+      companyName: string;
+      email?: string;
+      phone: string;
+
+    }[]
   }[];
 }
 const ViewResume = ({handleModal}:{handleModal:() => void}) => {
@@ -72,7 +84,7 @@ const [isLoading, setIsLoading] = useState(false)
     html2pdf().from(element).save('resume.pdf')
   }
   return (
-    <div className="w-full min-h-screen  max-h-[150vh] absolute top-0 left-0 opacity-100 z-20 py-4 px-20 bg-slate-200">
+    <div className="w-full min-h-screen  max-h-[300vh] absolute top-0 left-0 opacity-100 z-20 py-4 px-20 bg-slate-200">
         <div onClick={handleModal} className="fixed top-10 left-10 opacity-100 z-30 cursor-pointer bg-slate-100 p-2 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
         <path fillRule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clipRule="evenodd" />
@@ -91,7 +103,7 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="text-sm font-semibold">
                     {resumeData?.personal[0].phone} | {resumeData?.personal[0].email}
                 </div>
-                <div className="flex gap-2 text-sm items-center">
+                <div className="flex gap-2 text-sm items-center justify-center">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -109,11 +121,11 @@ const [isLoading, setIsLoading] = useState(false)
             )}
 
             {resumeData?.objective &&resumeData?.objective.length > 0 && (
-                <div>
+                <div className="">
                 <div className="heading-bg">
                     <h1 className="h1">objective</h1>
                 </div>
-                <div className="py-2 text-sm px-4">
+                <div className="py-3 text-sm px-4">
                     {resumeData?.objective[0].objective}
                 </div>
                 </div>
@@ -123,16 +135,21 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">Experience</h1>
                 </div>
-                <div className="px-4 py-2 text-sm">
-                    <h2 className=" font-semibold">
-                    {resumeData?.experience[0].companyName}
-                    </h2>
-                    <span className="italic">
-                    {resumeData?.experience[0].start}- {resumeData?.experience[0].end}
-                    </span>
-                    <div className="">{resumeData?.experience[0].jobTitle} </div>
-                    <p className="">{resumeData?.experience[0].details}</p>
-                </div>
+                {
+                  resumeData?.experience[0]?.experiences.map((experience, index) =>(
+
+                  <div key={index} className="px-4 py-3 text-sm">
+                      <h2 className=" font-semibold">
+                      {experience.companyName}
+                      </h2>
+                      <span className="italic">
+                      {experience.start}- {experience.end}
+                      </span>
+                      <div className="">{experience.jobTitle} </div>
+                      <p className="">{experience.details}</p>
+                  </div>
+                  ))
+                }
                 </div>
             )}
             { resumeData?.education && resumeData?.education?.length > 0 && (
@@ -140,16 +157,21 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">Education</h1>
                 </div>
-                <div className="px-4 py-2 text-xs">
-                    <h2 className=" font-semibold">
-                    {resumeData?.education[0].school}
-                    </h2>
-                    <span className="italic text-xs">
-                    {resumeData?.education[0].year}
-                    </span>
-                    <div className="">{resumeData?.education[0].course} </div>
-                    <p className="">{resumeData?.education[0].grade}</p>
-                </div>
+                {
+                  resumeData.education[0].education?.map((edu, index)=>(
+
+                    <div key={index} className="px-4 py-3 text-xs">
+                        <h2 className=" font-semibold">
+                        {edu.school}
+                        </h2>
+                        <span className="italic text-xs">
+                        {edu.year}
+                        </span>
+                        <div className="">{edu.course} </div>
+                        <p className="">{edu.grade}</p>
+                    </div>
+                  ))
+                }
                 </div>
             )}
             {resumeData?.skills && resumeData?.skills.length > 0 && (
@@ -157,7 +179,7 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">Skills</h1>
                 </div>
-                <div className="py-2 text-sm px-4" dangerouslySetInnerHTML={{__html: resumeData?.skills[0].content || ''}}/>
+                <div className="py-3 text-sm px-4" dangerouslySetInnerHTML={{__html: resumeData?.skills[0].content || ''}}/>
                     {/* {resumeData?.skills[0].content} */}
                 {/* </div> */}
                 </div>
@@ -167,10 +189,15 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg ">
                     <h1 className="h1">Projects</h1>
                 </div>
-                <div className="px-4 py-2 text-xs">
-                    <h2 className=" font-semibold">{resumeData?.projects[0].title}</h2>
-                    <p className="">{resumeData?.projects[0].description}</p>
+              {
+                resumeData.projects[0].project.map((proje, index)=>(
+                <div key={index} className="px-4 py-3 text-xs">
+                    <h2 className=" font-semibold">{proje.title}</h2>
+                    <p className="">{proje.description}</p>
                 </div>
+
+                ))
+              }
                 </div>
             )}
             {resumeData?.certification && resumeData?.certification.length > 0 && (
@@ -178,7 +205,7 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">certifications & Achievements</h1>
                 </div>
-                <div className="py-2 text-sm px-4">
+                <div className="py-3 text-sm px-4">
                     {resumeData?.certification[0].certificate}
                 </div>
                 </div>
@@ -188,12 +215,15 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">Reference</h1>
                 </div>
-                <div className="px-4 py-2 text-xs flex flex-col gap-1">
-                    <h2 className=" font-semibold">{resumeData?.reference[0].name}</h2>
-                    <span className="">{resumeData?.reference[0].companyName}</span>
-                    <div className="">{resumeData?.reference[0].email} </div>
-                    <p className="">{resumeData?.reference[0].phone}</p>
-                </div>
+                {resumeData?.reference[0].referees?.map((referee, index) =>(
+
+                  <div key={index} className="px-4 py-3 text-xs flex flex-col gap-1">
+                      <h2 className=" font-semibold">{referee.name}</h2>
+                      <span className="">{referee.companyName}</span>
+                      <div className="">{referee.email} </div>
+                      <p className="">{referee.phone}</p>
+                  </div>
+                ))}
                 </div>
             )}
           

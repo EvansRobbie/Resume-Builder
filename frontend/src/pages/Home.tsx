@@ -45,7 +45,7 @@ const Home = () => {
 //    console.log(isOpen)
   return (
     <div className='pt-20 flex'>
-        <nav className={` ${isOpen? 'w-auto' : 'w-20 items-center'} flex flex-col   py-4 bg-slate-950 h-screen`}>
+        <nav className={` ${isOpen? 'w-auto' : 'w-20 items-center'} flex flex-col   py-4 bg-slate-950 min-h-screen max-h-[200vh]`}>
         {/* sidebar */}
         <Link to='/create-resume/personal' className={`${navLinks('personal')}`}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">

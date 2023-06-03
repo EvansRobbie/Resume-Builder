@@ -2,8 +2,13 @@ const {Schema, model} = require('mongoose')
 
 const ProjectsSchema = new Schema({
     user:{type:Schema.Types.ObjectId, require:true},
-    title:{type:String},
-    description:{type:String},
+    project:[
+        {
+
+            title:{type:String},
+            description:{type:String},
+        }
+    ]
     
 
 })
