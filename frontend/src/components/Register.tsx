@@ -19,21 +19,15 @@ const Register = ({
   const onSubmit = async (values: any) => {
     //   e.preventDefault()
     //   // const data =
-    //   try{
-    //     await  axios.post('/register',{
-    //       username,
-    //       email,
-    //       password
-    //     } )
-    //     setToggle(false)
-    //     setUsername('')
-    //     setEmail('')
-    //     setPassword('')
-    //     // alert('Registration Successful')
-    //   }catch(e){
-    //     // console.log(e)
-    //     alert('Registration Failed')
-    //   }
+      try{
+        await  axios.post('/register',values )
+        setToggle(false)
+   
+        alert('Registration Successful')
+      }catch(e){
+        console.log('Registration Failed',e)
+        alert('Registration Failed')
+      }
   };
   return (
     <Formik onSubmit={onSubmit} initialValues={initialValues}>
@@ -47,13 +41,13 @@ const Register = ({
         <FormikControl
           control="input"
           name="email"
-          label="Password"
+          label="Email"
           placeholder="janedoe@gmail.com"
         />
         <FormikControl
           control="input"
           name="password"
-          label="Email"
+          label="Password"
           placeholder="Password"
         />
         <div className=' button'>

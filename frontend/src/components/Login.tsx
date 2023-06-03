@@ -25,17 +25,14 @@ const Login = ({
   };
   const onSubmit = async (values: any) => {
     // e.preventDefault()
-    //     try{
-    //    const {data} =  await  axios.post('/login', {
-    //         username,
-    //         password
-    //       })
+        try{
+        await  axios.post('/login', values)
     //       setUser(data)
     //       navigate('/')
-    //       setLoginModal(false)
-    //     }catch(e){
-    //       alert('Login Failed')
-    //     }
+          setLoginModal(false)
+        }catch(e){
+          alert('Login Failed')
+        }
     // if(user){
     //   return <Navigate to={'/'}/>
     // }

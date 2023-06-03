@@ -37,7 +37,7 @@ const Skills = () => {
       <Editor value={content} onChange ={setContent}/>
       <div className=' button'>
               <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'update' : 'save'}</button>
-            </div>
+        </div>
     </form>
   )
 }
