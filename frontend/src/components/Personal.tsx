@@ -39,9 +39,14 @@ const [isEdit, setIsEdit] = useState(false)
   }, [subpages])
   const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
-      await axios.post('/personal', values)
-      onSubmitProps.resetForm()
-      navigate('/create-resume')
+      if(isEdit){
+        await axios.put('/personal', values)
+      }else{
+
+        await axios.post('/personal', values)
+        onSubmitProps.resetForm()
+        navigate('/create-resume')
+      }
     }catch(e){
       console.log(e)
     }

@@ -2,10 +2,11 @@ import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Objective = () => {
   const {subpages} = useParams()
+  const navigate = useNavigate()
   const [initialValues, setInitialValues] = useState ({
     objective:''
   }
@@ -14,8 +15,6 @@ const [isEditing, setIsEdit] = useState(false)
 
 useEffect(() =>{
   if (subpages === 'objective'){
-      setIsEdit(true)
-
       const fetchData =  async () =>{ 
           const {data} =  await axios.get('/objective')
           if(data){
@@ -28,11 +27,17 @@ useEffect(() =>{
 }, [subpages])
   const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
-      await axios.post('/objective', values)
-      onSubmitProps.resetForm()
+      if(isEditing){
+        await axios.put('/objective', values)
+      }else{
+        await axios.post('/objective', values)
+        onSubmitProps.resetForm()
+
+      }
     }catch(e){
       console.log(e)
     }
+    navigate('/create-resume')
   }
   return (
     <Formik

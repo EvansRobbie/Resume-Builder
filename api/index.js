@@ -350,10 +350,131 @@ app.get('/api/referee', async (req, res) =>{
 // Edit details and update them to Mongo Atlas DB
 app.put('/api/personal', async (req, res) =>{
     const userData = await getUserDataFromToken(req)
-    const {id, name, email, address, phone, website, linked } = req.body;
+    const { name, email, address, phone, website, linked } = req.body;
+    // console.log({user})
     try{
-      const personal = await Personal.update
+      const personal = await Personal.findOneAndUpdate({
+        user:userData.id,
+        name, email, address, phone, website, linked,
+        new: true
+     } )
+      res.json(personal)
+    }catch(e){
+      console.log('Failed to update personal details', e)
+      res.status(500).json('Failed to update personal details');
     }
+})
+app.put('/api/objective', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { objective } = req.body;
+  // console.log({user})
+  try{
+    const objectiveDetails = await Objective.findOneAndUpdate({
+      user:userData.id,
+      objective,
+      new: true
+   } )
+    res.json(objectiveDetails)
+  }catch(e){
+    console.log('Failed to update objective details', e)
+    res.status(500).json('Failed to update objective details');
+  }
+})
+app.put('/api/experience', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { companyName, jobTitle, start, end, details } = req.body;
+  // console.log({user})
+  try{
+    const experience = await Experience.findOneAndUpdate({
+      user:userData.id,
+      companyName, jobTitle, start, end, details,
+      new: true
+   } )
+    res.json(experience)
+  }catch(e){
+    console.log('Failed to update experience details', e)
+    res.status(500).json('Failed to update experience details');
+  }
+})
+app.put('/api/education', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { course, school, grade, year } = req.body;
+  // console.log({user})
+  try{
+    const education = await Education.findOneAndUpdate({
+      user:userData.id,
+      course, school, grade, year,
+      new: true
+   } )
+    res.json(education)
+  }catch(e){
+    console.log('Failed to update education details', e)
+    res.status(500).json('Failed to update education details');
+  }
+})
+app.put('/api/skills', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { content } = req.body;
+  // console.log({user})
+  try{
+    const skills = await Skills.findOneAndUpdate({
+      user:userData.id,
+      content,
+      new: true
+   } )
+    res.json(skills)
+  }catch(e){
+    console.log('Failed to update skills details', e)
+    res.status(500).json('Failed to update skills details');
+  }
+})
+app.put('/api/projects', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { title, description } = req.body;
+  // console.log({user})
+  try{
+    const projects = await Projects.findOneAndUpdate({
+      user:userData.id,
+      title, description,
+      new: true
+   } )
+    res.json(projects)
+  }catch(e){
+    console.log('Failed to update projects details', e)
+    res.status(500).json('Failed to update projects details');
+  }
+})
+app.put('/api/certification', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { certificate } = req.body;
+  // console.log({user})
+  try{
+    const certification = await Certification.findOneAndUpdate({
+      user:userData.id,
+      certificate,
+      new: true
+   } )
+    res.json(certification)
+  }catch(e){
+    console.log('Failed to update certification details', e)
+    res.status(500).json('Failed to update certification details');
+  }
+})
+app.put('/api/reference', async (req, res) =>{
+  const userData = await getUserDataFromToken(req)
+  const { referees} = req.body;
+  // console.log({user})
+  try{
+    const reference = await Reference.findOneAndUpdate({
+      user:userData.id,
+      referees,
+      new: true
+   } )
+    res.json(reference)
+  }catch(e){
+    console.log('Failed to update reference details', e)
+    res.status(500).json('Failed to update reference details');
+  }
 })
 // Post details for AI prompt to generate a resume Sample
 app.listen(port);
