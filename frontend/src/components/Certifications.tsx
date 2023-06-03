@@ -2,10 +2,11 @@ import {useState, useEffect} from 'react'
 import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Certifications = () => {
   const {subpages} = useParams()
+  const navigate = useNavigate()
   const [initialValues, setInitialValues] = useState({
     certificate:''
   })
@@ -31,8 +32,15 @@ const Certifications = () => {
   }, [subpages])
   const onSubmit = async (values:any, onSubmitProps:any) =>{
     try{
-      await axios.post('/certifications', values)
-      onSubmitProps.resetForm()
+      if(isEdit){
+        await axios.put('/certifications', values)
+      }else{
+
+        await axios.post('/certifications', values)
+        onSubmitProps.resetForm()
+        
+      }
+      navigate('/create-resume')
     }catch(e){
       console.log(e)
     }

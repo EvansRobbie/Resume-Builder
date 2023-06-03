@@ -37,10 +37,15 @@ const Education = () => {
   // console.log(initialValues)
   const onSubmit = async (values:any, onSubmitProps:any) =>{
     try{
-      await axios.post('/education', values)
-      onSubmitProps.resetForm()
+      if(isEdit){
+        await axios.put('/education', values)
+      }else{
+
+        await axios.post('/education', values)
+        onSubmitProps.resetForm()
+        
+      }
       navigate('/create-resume')
-      setIsEdit(true)
     }catch(e){
       console.log(e)
     }

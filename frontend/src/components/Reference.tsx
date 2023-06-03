@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Form, Formik, FieldArray } from "formik";
 import axios from "axios";
 import FormikControl from "../forms/FormikControl";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Reference = () => {
   const { subpages } = useParams();
+  const navigate = useNavigate()
   const [initialValues, setInitialValues] = useState({
     referees: [
       {
@@ -39,9 +40,16 @@ const Reference = () => {
   }, [subpages]);
   const onSubmit = async (values: any, onSubmitProps: any) => {
     // console.log(values)
-    try {
-      await axios.post("/reference",  { referees: values.referees });
-      onSubmitProps.resetForm();
+    try{
+      if(isEdit){
+        await axios.put('/reference',  { referees: values.referees })
+      }else{
+
+        await axios.post('/reference',  { referees: values.referees })
+        onSubmitProps.resetForm()
+        
+      }
+      navigate('/create-resume')
     } catch (e) {
       console.log(e);
     }
@@ -54,7 +62,7 @@ const Reference = () => {
       className='py-4'
     >
       {formik => (
-        <Form className='w-full flex flex-col gap-6'>
+        <Form className='w-full flex flex-col gap-6 py-4'>
           <FieldArray name="referees">
             {({ push, remove }) => (
               <div>
@@ -105,15 +113,14 @@ const Reference = () => {
               </div>
             )}
           </FieldArray>
-          <div className='button'>
-            <button
-              className='text-slate-200 font-blod uppercase text-sm'
+          <button
+              className='text-slate-200 button font-blod uppercase text-sm disabled:bg-cyan-500/20 cursor-pointer disabled:text-slate-950'
               type='submit'
               disabled={!formik.dirty || !formik.isValid}
             >
               {isEdit ? 'Update' : 'Save'}
             </button>
-          </div>
+         
         </Form>
       )}
     </Formik>

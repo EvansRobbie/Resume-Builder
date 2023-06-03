@@ -45,8 +45,9 @@ const [isEdit, setIsEdit] = useState(false)
 
         await axios.post('/personal', values)
         onSubmitProps.resetForm()
-        navigate('/create-resume')
+        
       }
+      navigate('/create-resume')
     }catch(e){
       console.log(e)
     }

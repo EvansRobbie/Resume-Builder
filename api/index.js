@@ -444,7 +444,7 @@ app.put('/api/projects', async (req, res) =>{
     res.status(500).json('Failed to update projects details');
   }
 })
-app.put('/api/certification', async (req, res) =>{
+app.put('/api/certifications', async (req, res) =>{
   const userData = await getUserDataFromToken(req)
   const { certificate } = req.body;
   // console.log({user})
