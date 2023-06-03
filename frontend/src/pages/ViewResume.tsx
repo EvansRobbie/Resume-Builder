@@ -45,16 +45,22 @@ interface resumeProps {
     phone: string;
   }[];
 }
-const ViewResume = () => {
+const ViewResume = ({handleModal}:{handleModal:() => void}) => {
   const [resumeData, setResumeData] = useState<resumeProps | null>(null);
-
+const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
+        setIsLoading(true)
       const { data } = await axios.get("/resume");
       setResumeData(data);
+      setIsLoading(false)
     };
+    
     fetchData();
   }, []);
+  if(isLoading){
+    return <div className="flex items-center h-screen justify-center w-full">Loading...</div>
+  }
   // console.log(resumeData)
   // console.log(personal)
   const handleDownload = () =>{
@@ -63,7 +69,13 @@ const ViewResume = () => {
     html2pdf().from(element).save('resume.pdf')
   }
   return (
-    <div className="w-full max-h-[150vh] absolute top-0 left-0 opacity-100 z-20 py-4 px-20 bg-slate-200">
+    <div className="w-full min-h-screen  max-h-[150vh] absolute top-0 left-0 opacity-100 z-20 py-4 px-20 bg-slate-200">
+        <div onClick={handleModal} className="fixed top-10 left-10 opacity-100 z-30 cursor-pointer bg-slate-100 p-2 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+        <path fillRule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clipRule="evenodd" />
+        </svg>
+
+        </div>
         <div className="max-w-3xl mx-auto " id="resume">
             {resumeData?.personal && (
                 <div className="flex flex-col items-center py-8">

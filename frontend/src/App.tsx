@@ -6,20 +6,26 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import axios from 'axios'
 import ViewResume from './pages/ViewResume'
+import LoginModal from './components/LoginModal'
 axios.defaults.baseURL= import.meta.env.VITE_BASEURL
 axios.defaults.withCredentials=true
 // console.log(axios.defaults.baseURL)
 function App() {
   const [showModal, setShowModal] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
   const handleModal = () =>{
     setShowModal(!showModal)
+  }
+  const handleLoginModal = () =>{
+    setLoginModal(!loginModal)
   }
 
 
   return (
     <>
-    <Navbar handleModal = {handleModal}/>
-    {showModal && <ViewResume/>}
+    <Navbar handleModal = {handleModal}  handleLoginModal={handleLoginModal}/>
+    {showModal && <ViewResume handleModal = {handleModal}/>}
+    {loginModal && <LoginModal loginModal= {loginModal} setLoginModal ={setLoginModal}/>}
     <Routes>
       <Route path='/' element={<Index/>}/>
       <Route path='/create-resume/:subpages/:action' element={<Home/>} />
