@@ -1,10 +1,10 @@
-import LoadImage from '../assets/spinner.svg'
+import LoadImage from "../assets/spinner.svg";
 const Loading = () => {
   return (
     <div>
-        <img src={LoadImage} alt="" />
+      <img src={LoadImage} alt="" />
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

@@ -17,25 +17,25 @@ const Login = ({
 }) => {
   //   const [username, setUsername] = useState('')
   //   const [password, setPassword] = useState('')
-    const {setUser} = useResumeContext()
+  const { setUser } = useResumeContext();
   const navigate = useNavigate();
-    
+
   const initialValues = {
     username: "",
     password: "",
   };
   const onSubmit = async (values: any) => {
     // e.preventDefault()
-        try{
-        const {data} = await  axios.post('/login', values)
-          setUser(data)
-          navigate('/')
-          setLoginModal(false)
-          toast.success('Logged in Successfully')
-        }catch(e){
-          console.log('Login Failed', e)
-          toast.error('Failed to Login')
-        }
+    try {
+      const { data } = await axios.post("/login", values);
+      setUser(data);
+      navigate("/");
+      setLoginModal(false);
+      toast.success(`Logged in as ${data?.username}`);
+    } catch (e) {
+      console.log("Login Failed", e);
+      toast.error("Failed to Login");
+    }
     // if(user){
     //   return <Navigate to={'/'}/>
     // }
@@ -57,21 +57,25 @@ const Login = ({
           label="Password"
           placeholder="password"
         />
-       
-        <div className=' button'>
-            <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Login</button>
+
+        <div className=" button">
+          <button
+            className="text-slate-200 font-blod uppercase text-sm "
+            type="submit"
+          >
+            Login
+          </button>
         </div>
         <div className="flex md:hidden gap-2 items-center">
-            <p className="text-sm">Don't have an account?</p>
-            <span
+          <p className="text-sm">Don't have an account?</p>
+          <span
             onClick={handleToggle}
             className="text-cyan-500 hover:underline underline-offset-2"
-            >
+          >
             Register
-            </span>
+          </span>
         </div>
       </Form>
-
     </Formik>
   );
 };

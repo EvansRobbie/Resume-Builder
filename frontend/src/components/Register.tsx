@@ -18,16 +18,16 @@ const Register = ({
   const onSubmit = async (values: any) => {
     //   e.preventDefault()
     //   // const data =
-      try{
-        await  axios.post('/register',values )
-        setToggle(false)
-        toast.success('Registration Successfull')
-        // alert('Registration Successful')
-      }catch(e){
-        console.log('Registration Failed',e)
-        toast.error('Registration Failed')
-        // alert('Registration Failed')
-      }
+    try {
+      await axios.post("/register", values);
+      setToggle(false);
+      toast.success("Registration Successfull");
+      // alert('Registration Successful')
+    } catch (e) {
+      console.log("Registration Failed", e);
+      toast.error("Registration Failed");
+      // alert('Registration Failed')
+    }
   };
   return (
     <Formik onSubmit={onSubmit} initialValues={initialValues}>
@@ -50,10 +50,15 @@ const Register = ({
           label="Password"
           placeholder="Password"
         />
-        <div className=' button'>
-            <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>Register</button>
+        <div className=" button">
+          <button
+            className="text-slate-200 font-blod uppercase text-sm "
+            type="submit"
+          >
+            Register
+          </button>
         </div>
-         
+
         <div className="flex md:hidden gap-2 items-center">
           <p className="text-sm">Already have an account?</p>
           <span
