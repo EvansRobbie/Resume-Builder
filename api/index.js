@@ -589,6 +589,26 @@ app.delete("/api/certification", async (req, res) => {
     res.status(422).json("Failed to delete certification details");
   }
 });
+
+app.delete("/api/reference/:id", async (req, res) => {
+  const { id } = req.params;
+  const userData = await getUserDataFromToken(req);
+
+  try {
+    const reference = await Reference.findOneAndUpdate(
+      { user: userData.id, "referees._id": id },
+      { $pull: { referees: { _id: id } } },
+      { new: true }
+    );
+    if (!reference) {
+      return res.status(404).json({ error: "Details not found" });
+    }
+    res.json({ message: "Referee Details deleted successfully" });
+  } catch (e) {
+    console.log("Failed to delete Referee details", e);
+    res.status(422).json("Failed to delete Referee details");
+  }
+});
 // Post details for AI prompt to generate a resume Sample
 app.post("/api/generate-resume", async (req, res) => {
   try {

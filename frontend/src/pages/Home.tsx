@@ -8,6 +8,8 @@ import Education from '../components/Education'
 import Skills from '../components/Skills'
 import Projects from '../components/Projects'
 import Certifications from '../components/Certifications'
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import 'react-tooltip/dist/react-tooltip.css'
 import {  useState } from 'react'
 const Home = () => {
     const [isOpen, setIsOpen] = useState(true)
@@ -47,13 +49,19 @@ const Home = () => {
     <div className='pt-20 flex'>
         <nav className={` ${isOpen? 'w-auto' : 'w-20 items-center'} flex flex-col   py-4 bg-slate-950 min-h-screen max-h-[200vh]`}>
         {/* sidebar */}
-        <Link to='/create-resume/personal' className={`${navLinks('personal')}`}>
+        <Link  id='personal' to='/create-resume/personal' className={`${navLinks('personal')}`}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
         <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
         </svg>
 
         <div className={`${!isOpen && 'hidden'}`} >personal&nbsp;information</div>
+      
         </Link>
+        <ReactTooltip
+         anchorId="app-title"
+        place="bottom"
+        content="Hello world! I'm a Tooltip"
+      />
         <Link to='/create-resume/objective' className={navLinks('objective')}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
         <path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" />

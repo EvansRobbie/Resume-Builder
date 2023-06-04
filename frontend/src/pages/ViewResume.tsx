@@ -125,7 +125,7 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">objective</h1>
                 </div>
-                <div className="py-3 text-sm px-4">
+                <div  style= {{ whiteSpace: 'pre-line' }} className="py-3 text-sm px-4">
                     {resumeData?.objective[0].objective}
                 </div>
                 </div>
@@ -146,7 +146,7 @@ const [isLoading, setIsLoading] = useState(false)
                       {experience.start}- {experience.end}
                       </span>
                       <div className="">{experience.jobTitle} </div>
-                      <p className="">{experience.details}</p>
+                      <p className="" style= {{ whiteSpace: 'pre-line' }}>{experience.details}</p>
                   </div>
                   ))
                 }
