@@ -1,4 +1,3 @@
-import React from 'react'
 import { formProps } from '../interfaces/form'
 import { Field } from 'formik'
 
