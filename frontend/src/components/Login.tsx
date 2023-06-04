@@ -4,6 +4,7 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import FormikControl from "../forms/FormikControl";
 import { useResumeContext } from "../context/ResumeContext";
+import { toast } from "react-hot-toast";
 // import Button from "./Button"
 // import { useUserContext } from '../context/UserContext'
 
@@ -30,8 +31,10 @@ const Login = ({
           setUser(data)
           navigate('/')
           setLoginModal(false)
+          toast.success('Logged in Successfully')
         }catch(e){
-          alert('Login Failed')
+          console.log('Login Failed', e)
+          toast.error('Failed to Login')
         }
     // if(user){
     //   return <Navigate to={'/'}/>

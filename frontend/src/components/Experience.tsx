@@ -5,6 +5,7 @@ import { Form, Formik, FieldArray } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from './DeleteButton'
 import RemoveButton from './RemoveButton'
+import { toast } from "react-hot-toast";
 
 const Experience = () => {
   const {subpages} = useParams()
@@ -38,7 +39,7 @@ useEffect(() =>{
           // console.log(data)
       } catch (e) {
         console.log('Failed to fetch Experience details', e)
-        
+        toast.error('Failed to fetch Experience details')
       }
     }
     fetchData()
@@ -49,15 +50,17 @@ useEffect(() =>{
     try{
       if(isEdit){
         await axios.put('/experience', {experiences: values.experiences})
+        toast.success(' Details Updated Successfully')
       }else{
-
+        toast.success('Details Saved Successfully')
         await axios.post('/experience', {experiences: values.experiences})
         onSubmitProps.resetForm()
         
       }
       navigate('/create-resume/experience')
     }catch(e){
-      console.log(e)
+      console.log('Failed To Submit Details',e)
+      toast.error('Failed To Submit Details')
     }
   }
   const handleDelete = async (formik:any,index:any) =>{
@@ -66,9 +69,11 @@ useEffect(() =>{
       await axios.delete(`/experience/${experienceToDelete._id}`);
       // Remove the experience from the formik values
     formik.setFieldValue(`experiences.${index}`, undefined);
-      navigate('/create-resume/experience')
+    toast.success('Details Deleted Succesfully')
+    navigate('/create-resume/experience')
     } catch (e) {
       console.log('Failed to delete experience Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (

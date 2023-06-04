@@ -5,6 +5,7 @@ import { Form, Formik, FieldArray } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
 import RemoveButton from './RemoveButton'
 import Button from './DeleteButton'
+import { toast } from "react-hot-toast";
 
 const Education = () => {
   const {subpages} = useParams()
@@ -36,7 +37,7 @@ const Education = () => {
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Education details', e)
-          
+          toast.error('Failed to fetch Education details')
         }
       }
       fetchData()
@@ -47,15 +48,18 @@ const Education = () => {
     try{
       if(isEdit){
         await axios.put('/education', { education: values.education })
+        toast.success(' Details Updated Successfully')
       }else{
 
         await axios.post('/education', { education: values.education })
+        toast.success('Details Saved Successfully')
         onSubmitProps.resetForm()
         
       }
       navigate('/create-resume/education')
     }catch(e){
       console.log(e)
+      toast.error('Failed To Submit Details')
     }
   }
   const handleDelete = async (formik:any,index:any) =>{
@@ -64,9 +68,11 @@ const Education = () => {
       await axios.delete(`/education/${educationToDelete._id}`);
       // Remove the education from the formik values
     formik.setFieldValue(`education.${index}`, undefined);
+    toast.success('Details Deleted Succesfully')
       navigate('/create-resume/education')
     } catch (e) {
       console.log('Failed to delete education Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (  

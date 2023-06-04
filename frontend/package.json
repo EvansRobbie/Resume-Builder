@@ -17,6 +17,7 @@
     "html2pdf.js": "^0.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.11.2",
     "react-spring": "^9.7.1",

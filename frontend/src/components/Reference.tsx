@@ -5,6 +5,7 @@ import FormikControl from "../forms/FormikControl";
 import { useNavigate, useParams } from "react-router-dom";
 import RemoveButton from "./RemoveButton";
 import Button from "./DeleteButton";
+import { toast } from "react-hot-toast";
 
 const Reference = () => {
   const { subpages } = useParams();
@@ -35,6 +36,7 @@ const Reference = () => {
           // console.log(data)
         } catch (e) {
           console.log("Failed to fetch Referee details", e);
+          toast.error('Failed to fetch Referee details')
         }
       };
       fetchData();
@@ -45,15 +47,18 @@ const Reference = () => {
     try{
       if(isEdit){
         await axios.put('/reference',  { referees: values.referees })
+        toast.success(' Details Updated Successfully')
       }else{
 
         await axios.post('/reference',  { referees: values.referees })
+        toast.success('Details Saved Successfully')
         onSubmitProps.resetForm()
         
       }
       navigate('/create-resume')
     } catch (e) {
-      console.log(e);
+      console.log('Failed To Submit Details',e)
+      toast.error('Failed To Submit Details')
     }
   };
 
@@ -63,9 +68,11 @@ const Reference = () => {
       await axios.delete(`/reference/${refereesToDelete._id}`);
       // Remove the referees from the formik values
     formik.setFieldValue(`referees.${index}`, undefined);
-      navigate('/create-resume/reference')
+    toast.success('Details Deleted Succesfully') 
+    navigate('/create-resume/reference')
     } catch (e) {
       console.log('Failed to delete referees Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (

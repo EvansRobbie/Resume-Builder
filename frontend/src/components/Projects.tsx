@@ -5,6 +5,7 @@ import FormikControl from '../forms/FormikControl'
 import { useNavigate, useParams } from 'react-router-dom'
 import RemoveButton from './RemoveButton'
 import Button from './DeleteButton'
+import { toast } from "react-hot-toast";
 
 const Projects = () => {
   const {subpages} = useParams()
@@ -36,7 +37,7 @@ const Projects = () => {
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Projects details', e)
-          
+          toast.error('Failed to fetch projects details')
         }
       }
       fetchData()
@@ -46,15 +47,18 @@ const Projects = () => {
     try{
       if(isEdit){
         await axios.put('/projects',{ project: values.project})
+        toast.success(' Details Updated Successfully')
       }else{
 
         await axios.post('/projects',{ project: values.project})
+        toast.success('Details Saved Successfully')
         onSubmitProps.resetForm()
         
       }
       
     }catch(e){
-      console.log(e)
+      console.log('Failed To Submit Details',e)
+      toast.error('Failed To Submit Details')
     }
     navigate('/create-resume')
   }
@@ -64,9 +68,11 @@ const Projects = () => {
       await axios.delete(`/project/${projectToDelete._id}`);
       // Remove the project from the formik values
     formik.setFieldValue(`project.${index}`, undefined);
+    toast.success('Details Deleted Succesfully')
       navigate('/create-resume/projects')
     } catch (e) {
       console.log('Failed to delete project Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (

@@ -4,6 +4,7 @@ import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from './DeleteButton'
+import { toast } from "react-hot-toast";
 
 const Personal = () => {
  const {subpages} = useParams()
@@ -33,6 +34,7 @@ const [isEdit, setIsEdit] = useState(false)
           
         }catch(e){
           console.log('Failed to fetch personal Data', e)
+          toast.error('Failed to fetch personal details')
         }
       }
       fetchData()
@@ -42,23 +44,28 @@ const [isEdit, setIsEdit] = useState(false)
     try{
       if(isEdit){
         await axios.put('/personal', values)
+        toast.success(' Details Updated Successfully')
       }else{
 
         await axios.post('/personal', values)
+        toast.success('Details Saved Successfully')
         onSubmitProps.resetForm()
         
       }
       navigate('/create-resume')
     }catch(e){
-      console.log(e)
+      console.log('Failed To Submit Details',e)
+      toast.error('Failed To Submit Details')
     }
   }
   const handleDelete = async () =>{
     try {
       await axios.delete('/personal')
+      toast.success('Details Deleted Succesfully')
       navigate('/create-resume/personal')
     } catch (e) {
       console.log('Failed to delete Personal Details')
+      toast.error('Failed to Delete details')
     }
   }
   // console.log(isEdit)

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Form, Formik } from "formik";
 import FormikControl from "../forms/FormikControl";
+import { toast } from "react-hot-toast";
 
 const Register = ({
   setToggle,
@@ -20,11 +21,12 @@ const Register = ({
       try{
         await  axios.post('/register',values )
         setToggle(false)
-   
-        alert('Registration Successful')
+        toast.success('Registration Successfull')
+        // alert('Registration Successful')
       }catch(e){
         console.log('Registration Failed',e)
-        alert('Registration Failed')
+        toast.error('Registration Failed')
+        // alert('Registration Failed')
       }
   };
   return (

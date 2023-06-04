@@ -4,6 +4,7 @@ import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from './DeleteButton'
+import { toast } from "react-hot-toast";
 
 const Certifications = () => {
   const {subpages} = useParams()
@@ -25,6 +26,7 @@ const Certifications = () => {
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Certification details', e)
+          toast.error('Failed to fetch Certification details')
           
         }
       }
@@ -35,23 +37,28 @@ const Certifications = () => {
     try{
       if(isEdit){
         await axios.put('/certifications', values)
+        toast.success(' Details Update Successful')
       }else{
 
         await axios.post('/certifications', values)
+        toast.success('Details Saved Successfull')
         onSubmitProps.resetForm()
         
       }
       navigate('/create-resume')
     }catch(e){
-      console.log(e)
+      console.log('Failed To Submit Details',e)
+      toast.error('Failed To Submit Details')
     }
   }
   const handleDelete = async () =>{
     try {
       await axios.delete('/certification')
+      toast.success('Details Deleted Succesfully')
       navigate('/create-resume/')
     } catch (e) {
       console.log('Failed to delete certification Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (

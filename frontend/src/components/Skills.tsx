@@ -3,6 +3,7 @@ import Editor from './Editor'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from './DeleteButton'
+import { toast } from "react-hot-toast";
  
 const Skills = () => {
   const {subpages} = useParams()
@@ -21,7 +22,7 @@ const Skills = () => {
             // console.log(data)
         } catch (e) {
           console.log('Failed to fetch Skills details', e)
-          
+          toast.error('Failed to fetch Skills details')
         }
       }
       fetchData()
@@ -32,23 +33,28 @@ const Skills = () => {
       try{
         if(isEdit){
           await axios.put('/skills', {content})
+          toast.success(' Details Updated Successfully')
         }else{
           await axios.post('/skills', {content})
+          toast.success('Details Saved Successfully')
           setContent('')
+          navigate('/create-resume/skills')
 
         }
       }catch(e){
-        console.log(e)
+        console.log('Failed To Submit Details',e)
+        toast.error('Failed To Submit Details')
       }
-      navigate('/create-resume')
   }
   const handleDelete = async () =>{
     try {
       await axios.delete('/skills')
       setContent('')
+      toast.success('Details Deleted Succesfully')
       navigate('/create-resume/skills')
     } catch (e) {
       console.log('Failed to delete skills Details')
+      toast.error('Failed to Delete details')
     }
   }
   return (
