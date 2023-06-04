@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import html2pdf from 'html2pdf.js';
 import Loading from "../components/Loading";
+import { useResumeContext } from "../context/ResumeContext";
 
 interface resumeProps {
   personal: {
@@ -60,6 +61,7 @@ interface resumeProps {
 }
 const ViewResume = ({handleModal}:{handleModal:() => void}) => {
   const [resumeData, setResumeData] = useState<resumeProps | null>(null);
+  const {user} = useResumeContext()
 const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +84,7 @@ const [isLoading, setIsLoading] = useState(false)
   const handleDownload = () =>{
     const element = document.getElementById('resume')
     // generate pdf from the resume
-    html2pdf().from(element).save('resume.pdf')
+    html2pdf().from(element).save(`${user?.username}.pdf`)
   }
   return (
     <div className="w-full min-h-screen  max-h-[300vh] absolute top-0 left-0 opacity-100 z-20 py-4 px-20 bg-slate-200">

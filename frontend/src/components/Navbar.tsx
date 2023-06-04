@@ -7,7 +7,7 @@ const Navbar = ({handleModal, handleLoginModal}:{handleModal:() => void, handleL
     const {user, handleLogout} = useResumeContext()
   return (
     <div className='absolute top-0 left-0 z-10 opacity-100 h-20 shadow-md shadow-slate-950/20 w-full '>
-        <nav className='h-full flex items-center justify-between max-w-6xl mx-auto'>
+        <nav className='h-full flex items-center justify-between max-w-6xl px-4 mx-auto'>
             <div className='flex items-center gap-2 w-1/2'>
                 <Link to='/'>
                     <img className='h-12 object-cover' src="https://cdn-icons-png.flaticon.com/128/9119/9119108.png" alt="/logo" />
@@ -28,7 +28,7 @@ const Navbar = ({handleModal, handleLoginModal}:{handleModal:() => void, handleL
                 </div>
             </div>
             {user? <div className='flex items-center gap-4'>
-                <h4 className='text-sm font-bold capitalize'>Welcome&nbsp;<span className='uppercase text-slate-100 bg-slate-950/40 px-2 py-0.5 text-sx md:px-4 md:py-1 rounded-sm'>{user.username}</span></h4>
+                <h4 className='text-sm hidden md:block font-bold capitalize'>Welcome&nbsp;<span className='uppercase text-slate-100 bg-slate-950/40 px-2 py-0.5 text-sx md:px-4 md:py-1 rounded-sm'>{user.username}</span></h4>
                 <button onClick={handleLogout} className='bg-red-500 px-4 py-1.5 rounded-md text-xs sm:text-sm text-slate-200 hover:bg-slate-900 duration-500 ease-in'>Logout</button>
             </div>:
             <div className='bg-cyan-500 px-4 py-1.5 rounded-md text-sm text-slate-200 hover:bg-slate-900 duration-500 ease-in'>

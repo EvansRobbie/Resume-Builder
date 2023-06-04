@@ -48,7 +48,7 @@ const GenerateResume = () => {
         {/* <div></div> */}
       {/* Helloo */}
     </Formik>
-      { isLoading ? <div className='flex items-center h-screen justify-center w-full'> <Loading/></div> : resume && <div className=' max-w-4xl mx-auto shadow-xl shadow-slate-950 px-6 py-4 rounded-2xl'  style={{ whiteSpace: 'pre-line' }}>{resume}</div>}
+      { isLoading ? <div className='flex items-center h-screen justify-center w-full'> <Loading/></div> : resume && <div className=' max-w-4xl mx-auto shadow-xl shadow-slate-950 px-6 py-4 rounded-2xl'  style={{ whiteSpace: 'pre-line' }} dangerouslySetInnerHTML={{__html: resume || ''}}/>}
       {/* {resume} */}
     </div>
   )

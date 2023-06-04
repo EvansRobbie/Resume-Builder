@@ -105,7 +105,7 @@ const Reference = () => {
                       <FormikControl
                         control="input"
                         name={`referees[${index}].companyName`}
-                        label="Company Name"
+                        label="Company&nbsp;Name"
                         placeholder="Google"
                       />
                       <FormikControl
