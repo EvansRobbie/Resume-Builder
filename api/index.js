@@ -476,6 +476,50 @@ app.put('/api/reference', async (req, res) =>{
   }
 })
 // Delete Resume Details
+app.delete('/api/personal', async (req, res)=>{
+  const userData = await getUserDataFromToken(req)
+  try{
+    const personal = await Personal.deleteOne({user:userData.id})
+    if (personal.deletedCount === 0) {
+      return res.status(404).json({ error: 'Details not found' });
+    }
+    res.json({message: 'Personal Details deleted successfully'})
+  }
+  catch(e){
+    console.log('Failed to delete Personal details', e)
+    res.status(422).json('Failed to delete Personal details')
+  }
+})
+
+app.delete('/api/objective', async (req, res)=>{
+  const userData = await getUserDataFromToken(req)
+  try{
+    const objective = await Objective.deleteOne({user:userData.id})
+    if (objective.deletedCount === 0) {
+      return res.status(404).json({ error: 'Details not found' });
+    }
+    res.json({message: 'Objective Details deleted successfully'})
+  }
+  catch(e){
+    console.log('Failed to delete Objective details', e)
+    res.status(422).json('Failed to delete Objective details')
+  }
+})
+app.delete('/api/experience', async (req, res)=>{
+  const userData = await getUserDataFromToken(req)
+  try{
+    const experience = await Experience.deleteOne({user:userData.id})
+    if (experience.deletedCount === 0) {
+      return res.status(404).json({ error: 'Details not found' });
+    }
+    res.json({message: 'Experience Details deleted successfully'})
+  }
+  catch(e){
+    console.log('Failed to delete Experience details', e)
+    res.status(422).json('Failed to delete Experience details')
+  }
+})
+
 // Post details for AI prompt to generate a resume Sample
 app.post('/api/generate-resume', async (req, res) =>{
   try {

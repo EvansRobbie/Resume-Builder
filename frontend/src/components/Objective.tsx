@@ -3,6 +3,7 @@ import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Button from './DeleteButton'
 
 const Objective = () => {
   const {subpages} = useParams()
@@ -39,13 +40,22 @@ useEffect(() =>{
     }
     navigate('/create-resume')
   }
+
+  const handleDelete = async () =>{
+    try {
+      await axios.delete('/objective')
+      navigate('/create-resume')
+    } catch (e) {
+      console.log('Failed to delete Objective Details')
+    }
+  }
   return (
     <Formik
     initialValues={initialValues}
     onSubmit={onSubmit}
     enableReinitialize={true}
     >
-        <Form>
+        <Form className='shadow-md group shadow-slate-950 px-4 py-6 rounded-2xl relative '>
         <FormikControl
                 control='textarea'
                 name = 'objective'
@@ -56,6 +66,7 @@ useEffect(() =>{
             <div className='button'>
               <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEditing ? 'update' : 'save'}</button>
             </div>
+            { isEditing && <Button handleDelete={handleDelete}/>}
         </Form>
 
     </Formik>

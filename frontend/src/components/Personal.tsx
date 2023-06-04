@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useNavigate, useParams } from 'react-router-dom'
+import Button from './DeleteButton'
 
 const Personal = () => {
  const {subpages} = useParams()
@@ -52,16 +53,24 @@ const [isEdit, setIsEdit] = useState(false)
       console.log(e)
     }
   }
+  const handleDelete = async () =>{
+    try {
+      await axios.delete('/personal')
+      navigate('/create-resume')
+    } catch (e) {
+      console.log('Failed to delete Personal Details')
+    }
+  }
   // console.log(isEdit)
   return (
     // enable initialize helps in pupulating the data that is in the db in the input fields for editing
     <Formik
     initialValues= {initialValues}
     onSubmit={onSubmit}
-    enableReinitialize={true}
+    enableReinitialize={true} 
     className='py-4'
     >
-        <Form className='w-full flex flex-col gap-6'>
+        <Form className='w-full relative flex flex-col group gap-6 shadow-md shadow-slate-950 px-4 py-6 rounded-2xl'>
           <div className='grid grid-cols-2 w-full gap-4'>
               <FormikControl
                   control = 'input'
@@ -109,6 +118,8 @@ const [isEdit, setIsEdit] = useState(false)
             <div className=' button'>
               <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'update' : 'save'}</button>
             </div>
+
+           { isEdit && <Button handleDelete={handleDelete}/>}
         </Form>
     </Formik>
   )
