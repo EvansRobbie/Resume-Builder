@@ -18,7 +18,7 @@ const Login = ({
   //   const [password, setPassword] = useState('')
     const {setUser} = useResumeContext()
   const navigate = useNavigate();
-    const {user} = useResumeContext()
+    
   const initialValues = {
     username: "",
     password: "",

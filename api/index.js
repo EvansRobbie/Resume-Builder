@@ -4,6 +4,7 @@ const { default: mongoose } = require("mongoose");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
+const { Configuration, OpenAIApi} = require('openai')
 const User = require('./models/User')
 const Personal = require("./models/Personal");
 const Objective = require("./models/Objective");
@@ -16,6 +17,12 @@ const Reference = require("./models/Reference");
 const app = express();
 require("dotenv").config();
 const port = 4000;
+
+const config = new Configuration({
+  organization: "org-t2jndfDjhw0g6mCXrCSiRfev",
+  apiKey: process.env.OPEN_AI_API_KEY,
+})
+const openai = new OpenAIApi(config);
 mongoose.connect(process.env.MONGO_URL);
 // console.log(process.env.MONGO_URL)
 
@@ -468,5 +475,24 @@ app.put('/api/reference', async (req, res) =>{
     res.status(500).json('Failed to update reference details');
   }
 })
+// Delete Resume Details
 // Post details for AI prompt to generate a resume Sample
+app.post('/api/generate-resume', async (req, res) =>{
+  try {
+    const { prompt } = req.body;
+
+    const generatedResume = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt,
+      max_tokens: 3000,
+    });
+
+    const resumeText = generatedResume.data.choices[0].text.trim();
+
+    res.json({ resume: resumeText });
+  } catch (error) {
+    console.error('Failed to generate resume:', error);
+    res.status(500).json({ error: 'Failed to generate resume' });
+  }
+})
 app.listen(port);

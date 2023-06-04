@@ -193,7 +193,7 @@ const [isLoading, setIsLoading] = useState(false)
                 resumeData.projects[0].project.map((proje, index)=>(
                 <div key={index} className="px-4 py-3 text-xs">
                     <h2 className=" font-semibold">{proje.title}</h2>
-                    <p className="">{proje.description}</p>
+                    <p className=""  style={{ whiteSpace: 'pre-line' }}>{proje.description}</p>
                 </div>
 
                 ))
@@ -205,7 +205,7 @@ const [isLoading, setIsLoading] = useState(false)
                 <div className="heading-bg">
                     <h1 className="h1">certifications & Achievements</h1>
                 </div>
-                <div className="py-3 text-sm px-4">
+                <div className="py-3 text-sm px-4"  style={{ whiteSpace: 'pre-line' }}>
                     {resumeData?.certification[0].certificate}
                 </div>
                 </div>

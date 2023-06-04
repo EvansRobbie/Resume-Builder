@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import axios from 'axios'
 import ViewResume from './pages/ViewResume'
 import LoginModal from './components/LoginModal'
+import GenerateResume from './pages/GenerateResume'
 axios.defaults.baseURL= import.meta.env.VITE_BASEURL
 axios.defaults.withCredentials=true
 // console.log(axios.defaults.baseURL)
@@ -30,7 +31,7 @@ function App() {
       <Route path='/' element={<Index/>}/>
       <Route path='/create-resume/:subpages/:action' element={<Home/>} />
       <Route path='/create-resume/:subpages?' element={<Home/>} />
-      {/* <Route path='/view-resume' element= {<ViewResume/>}/> */}
+      <Route path='/generate-resume' element= {<GenerateResume/>}/>
     </Routes>
      
     </>
