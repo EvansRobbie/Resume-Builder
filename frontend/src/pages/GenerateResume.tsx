@@ -2,10 +2,12 @@ import { Form, Formik } from 'formik'
 import  {useState, useEffect} from 'react'
 import FormikControl from '../forms/FormikControl'
 import axios from 'axios'
+import Loading from '../components/Loading'
 
 
 const GenerateResume = () => {
   const [resume, setResume] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
    // Load resume from local storage on initial render
    useEffect(() => {
     const savedResume = localStorage.getItem('resume');
@@ -18,9 +20,11 @@ const GenerateResume = () => {
   }
   const onSubmit = async (values:any, onSubmitProps:any) => {
     try{
+      setIsLoading(true)
       const response =  await axios.post('/generate-resume', values)
       const {resume} = response.data
       setResume(resume)
+      setIsLoading(false)
       onSubmitProps.resetForm()
       // Save resume to local storage
     localStorage.setItem('resume', resume);
@@ -28,6 +32,7 @@ const GenerateResume = () => {
     }catch(e){
       console.log('Failed to generate resume:', e)
     }
+    
   }
   // console.log(resume)
   return (
@@ -43,7 +48,7 @@ const GenerateResume = () => {
         {/* <div></div> */}
       {/* Helloo */}
     </Formik>
-      {resume && <div className=' max-w-4xl mx-auto shadow-xl shadow-slate-950 px-6 py-4 rounded-2xl'  style={{ whiteSpace: 'pre-line' }}>{resume}</div>}
+      { isLoading ? <div className='flex items-center h-screen justify-center w-full'> <Loading/></div> : resume && <div className=' max-w-4xl mx-auto shadow-xl shadow-slate-950 px-6 py-4 rounded-2xl'  style={{ whiteSpace: 'pre-line' }}>{resume}</div>}
       {/* {resume} */}
     </div>
   )

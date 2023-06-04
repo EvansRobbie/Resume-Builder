@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import html2pdf from 'html2pdf.js';
+import Loading from "../components/Loading";
 
 interface resumeProps {
   personal: {
@@ -74,7 +75,7 @@ const [isLoading, setIsLoading] = useState(false)
     fetchData();
   }, []);
   if(isLoading){
-    return <div className="flex items-center h-screen justify-center w-full">Loading...</div>
+    return <div className="flex items-center h-screen justify-center w-full"><Loading/></div>
   }
   // console.log(resumeData)
   // console.log(personal)

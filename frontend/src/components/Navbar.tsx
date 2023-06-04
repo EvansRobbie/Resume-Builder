@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom'
 import { useResumeContext } from '../context/ResumeContext'
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'
 
 const Navbar = ({handleModal, handleLoginModal}:{handleModal:() => void, handleLoginModal:() => void}) => {
     const {user, handleLogout} = useResumeContext()
@@ -11,9 +13,18 @@ const Navbar = ({handleModal, handleLoginModal}:{handleModal:() => void, handleL
                     <img className='h-12 object-cover' src="https://cdn-icons-png.flaticon.com/128/9119/9119108.png" alt="/logo" />
                 </Link>
                 <div className='flex items-center gap-2'>
+                    <Tippy content='Create Resume'>
+
                     <Link className='font-semibold backdrop-blur hover:bg-slate-900/20 cursor-pointer backdrop-filter px-4 py-0.5 rounded-xl duration-300 ease-in text-sm md:text-lg' to={`/create-resume`}>Create</Link>
+                    </Tippy>
+                    <Tippy content='Generate Resume'>
+
                     <Link className='font-semibold backdrop-blur hover:bg-slate-900/20 cursor-pointer backdrop-filter px-4 py-0.5 rounded-xl duration-300 ease-in text-sm md:text-lg' to={`/generate-resume`}>Generate&nbsp;</Link>
+                    </Tippy>
+                    <Tippy content='View Resume'>
+
                     <div onClick={handleModal} className='font-semibold hover:bg-slate-900/20 cursor-pointer backdrop-blur backdrop-filter px-4 py-0.5 rounded-xl duration-300 ease-in text-sm md:text-lg' >View&nbsp;</div>
+                    </Tippy>
                 </div>
             </div>
             {user? <div className='flex items-center gap-4'>

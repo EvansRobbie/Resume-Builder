@@ -12,6 +12,7 @@ import Certifications from '../components/Certifications'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'
 import {  useState } from 'react'
+import Start from '../components/Start'
 const Home = () => {
     const [isOpen, setIsOpen] = useState(true)
     const {subpages} = useParams()
@@ -153,7 +154,7 @@ const Home = () => {
    
             {subpages === 'personal'? <Personal/>: subpages==='objective'? <Objective/>: subpages === 'work'? <Work/>:
                 subpages==='experience'?<Experience/>: subpages === 'education'?<Education/>: subpages === 'skills'?<Skills/>:
-                subpages === 'projects'?<Projects/> : subpages === 'certifications'? <Certifications/> : subpages==='reference'?<Reference/> :''
+                subpages === 'projects'?<Projects/> : subpages === 'certifications'? <Certifications/> : subpages==='reference'?<Reference/> :<Start/>
             }
         </div>
 
