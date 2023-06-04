@@ -56,7 +56,7 @@ const [isEdit, setIsEdit] = useState(false)
   const handleDelete = async () =>{
     try {
       await axios.delete('/personal')
-      navigate('/create-resume')
+      navigate('/create-resume/personal')
     } catch (e) {
       console.log('Failed to delete Personal Details')
     }

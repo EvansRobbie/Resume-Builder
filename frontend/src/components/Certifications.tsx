@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import axios from 'axios'
 import FormikControl from '../forms/FormikControl'
 import { useNavigate, useParams } from 'react-router-dom'
+import Button from './DeleteButton'
 
 const Certifications = () => {
   const {subpages} = useParams()
@@ -45,13 +46,21 @@ const Certifications = () => {
       console.log(e)
     }
   }
+  const handleDelete = async () =>{
+    try {
+      await axios.delete('/certification')
+      navigate('/create-resume/')
+    } catch (e) {
+      console.log('Failed to delete certification Details')
+    }
+  }
   return (
     <Formik
     initialValues={initialValues}
     onSubmit={onSubmit}
     enableReinitialize={true}
     >
-        <Form>
+        <Form className=' relative group  shadow-md shadow-slate-950 rounded-2xl py-6 px-8'>
         <FormikControl
                 control='textarea'
                 name = 'certificate'
@@ -62,6 +71,7 @@ const Certifications = () => {
             <div className='button'>
               <button className='text-slate-200 font-blod uppercase text-sm ' type='submit'>{isEdit? 'update' : 'save'}</button>
             </div>
+            {isEdit &&  <Button handleDelete={handleDelete}/>}
         </Form>
 
     </Formik>

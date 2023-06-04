@@ -55,7 +55,7 @@ useEffect(() =>{
         onSubmitProps.resetForm()
         
       }
-      navigate('/create-resume')
+      navigate('/create-resume/experience')
     }catch(e){
       console.log(e)
     }
@@ -66,7 +66,7 @@ useEffect(() =>{
       await axios.delete(`/experience/${experienceToDelete._id}`);
       // Remove the experience from the formik values
     formik.setFieldValue(`experiences.${index}`, undefined);
-      navigate('/create-resume')
+      navigate('/create-resume/experience')
     } catch (e) {
       console.log('Failed to delete experience Details')
     }
