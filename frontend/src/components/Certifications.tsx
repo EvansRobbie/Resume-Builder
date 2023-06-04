@@ -37,11 +37,11 @@ const Certifications = () => {
     try{
       if(isEdit){
         await axios.put('/certifications', values)
-        toast.success(' Details Update Successful')
+        toast.success(' Details Updated Successfully')
       }else{
 
         await axios.post('/certifications', values)
-        toast.success('Details Saved Successfull')
+        toast.success('Details Saved Successfully')
         onSubmitProps.resetForm()
         
       }
