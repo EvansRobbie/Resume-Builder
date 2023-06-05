@@ -12,12 +12,14 @@ const Index = () => {
           alt="/home/image"
         />
       </div>
-      <div className="max-w-lg bg-slate-200/50 backdrop-blur backdrop-filter px-4 py-1.5 text-slate-950 rounded-2xl">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt,
-          vel. Laboriosam odio quidem animi nesciunt facilis voluptatem beatae
-          rerum tempore eveniet tenetur sequi architecto, iusto perspiciatis,
-          laborum itaque alias quaerat.
+      <div className="max-w-lg bg-slate-900/70 backdrop-blur backdrop-filter px-4 py-1.5 text-slate-950 rounded-2xl">
+        <p className="text-slate-200 text-sm py-4">
+          Build your professional resume effortlessly with our intuitive resume
+          builder. Create a standout resume that highlights your skills,
+          experience, and achievements. Our user-friendly interface makes it
+          easy to customize your resume to suit your unique career goals. Stand
+          out from the competition and increase your chances of landing your
+          dream job. Start crafting your perfect resume today!
         </p>
       </div>
       <div

@@ -8,6 +8,7 @@ import axios from "axios";
 import ViewResume from "./pages/ViewResume";
 import LoginModal from "./components/LoginModal";
 import GenerateResume from "./pages/GenerateResume";
+import ProtectedRoute from "./components/ProtectedRoute";
 axios.defaults.baseURL = import.meta.env.VITE_BASEURL;
 axios.defaults.withCredentials = true;
 // console.log(axios.defaults.baseURL)
@@ -24,15 +25,15 @@ function App() {
   return (
     <>
       <Navbar handleModal={handleModal} handleLoginModal={handleLoginModal} />
-      {showModal && <ViewResume handleModal={handleModal} />}
+      {showModal && <ProtectedRoute>  <ViewResume handleModal={handleModal} /></ProtectedRoute>}
       {loginModal && (
         <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
       )}
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/create-resume/:subpages/:action" element={<Home />} />
-        <Route path="/create-resume/:subpages?" element={<Home />} />
-        <Route path="/generate-resume" element={<GenerateResume />} />
+        <Route path="/create-resume/:subpages/:action" element={ <Home />} />
+        <Route path="/create-resume/:subpages?" element={<ProtectedRoute> <Home /></ProtectedRoute>} />
+        <Route path="/generate-resume" element={ <GenerateResume />} />
       </Routes>
     </>
   );

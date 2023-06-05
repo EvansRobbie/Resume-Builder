@@ -1,5 +1,6 @@
+import TextError from "../components/TextError";
 import { formProps } from "../interfaces/form";
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 
 const Textarea = ({ label, name, ...rest }: formProps) => {
   return (
@@ -12,6 +13,9 @@ const Textarea = ({ label, name, ...rest }: formProps) => {
         {...rest}
         className="w-full border border-slate-500 px-4 py-1.5 outline-none rounded-xl h-24 bg-slate-200"
       />
+       <ErrorMessage name={name}>
+      {(errorMsg) => <TextError>{errorMsg}</TextError>}
+      </ErrorMessage>
     </div>
   );
 };

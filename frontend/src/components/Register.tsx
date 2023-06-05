@@ -2,7 +2,7 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import FormikControl from "../forms/FormikControl";
 import { toast } from "react-hot-toast";
-
+import * as Yup from "yup";
 const Register = ({
   setToggle,
   handleToggle,
@@ -15,6 +15,11 @@ const Register = ({
     email: "",
     password: "",
   };
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username Required"),
+    email: Yup.string().email().required("Email Required"),
+    password: Yup.string().required("Password Required"),
+  });
   const onSubmit = async (values: any) => {
     //   e.preventDefault()
     //   // const data =
@@ -30,7 +35,11 @@ const Register = ({
     }
   };
   return (
-    <Formik onSubmit={onSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       <Form className="relative">
         <FormikControl
           control="input"
@@ -49,6 +58,7 @@ const Register = ({
           name="password"
           label="Password"
           placeholder="Password"
+          type="password"
         />
         <div className=" button">
           <button

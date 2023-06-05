@@ -7,6 +7,7 @@ interface formProps {
   name: string;
   label: string;
   placeholder: string;
+  type?:string
 }
 const FormikControl: React.FC<formProps> = ({ control, ...rest }) => {
   switch (control) {

@@ -5,6 +5,7 @@ import { Form, Formik } from "formik";
 import FormikControl from "../forms/FormikControl";
 import { useResumeContext } from "../context/ResumeContext";
 import { toast } from "react-hot-toast";
+import * as Yup from "yup";
 // import Button from "./Button"
 // import { useUserContext } from '../context/UserContext'
 
@@ -24,6 +25,10 @@ const Login = ({
     username: "",
     password: "",
   };
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username Required"),
+    password: Yup.string().required("Password Required"),
+  });
   const onSubmit = async (values: any) => {
     // e.preventDefault()
     try {
@@ -43,7 +48,11 @@ const Login = ({
   };
 
   return (
-    <Formik onSubmit={onSubmit} initialValues={initialValues}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+    >
       <Form>
         <FormikControl
           control="input"
@@ -55,6 +64,7 @@ const Login = ({
           control="input"
           name="password"
           label="Password"
+          type="password"
           placeholder="password"
         />
 
