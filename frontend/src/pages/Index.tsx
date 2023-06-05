@@ -12,7 +12,7 @@ const Index = () => {
           alt="/home/image"
         />
       </div>
-      <div className="max-w-lg bg-slate-900/70 backdrop-blur backdrop-filter px-4 py-1.5 text-slate-950 rounded-2xl">
+      <div className="max-w-lg bg-slate-900/70 backdrop-blur mx-4 backdrop-filter px-4 py-1.5 text-slate-950 rounded-2xl">
         <p className="text-slate-200 text-sm py-4">
           Build your professional resume effortlessly with our intuitive resume
           builder. Create a standout resume that highlights your skills,
