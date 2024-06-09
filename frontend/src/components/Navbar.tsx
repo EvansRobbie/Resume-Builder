@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
-import { useResumeContext } from "../context/ResumeContext";
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
+import { Link } from 'react-router-dom'
+import { useResumeContext } from '../context/ResumeContext'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 
 const Navbar = ({
   handleModal,
   handleLoginModal,
 }: {
-  handleModal: () => void;
-  handleLoginModal: () => void;
+  handleModal: () => void
+  handleLoginModal: () => void
 }) => {
-  const { user, handleLogout } = useResumeContext();
+  const { user, handleLogout } = useResumeContext()
   return (
     <div className="absolute top-0 left-0 z-10 opacity-100 h-20 shadow-md shadow-slate-950/20 w-full ">
       <nav className="h-full flex items-center justify-between max-w-6xl px-4 mx-auto">
@@ -65,13 +65,13 @@ const Navbar = ({
             </button>
           </div>
         ) : (
-          <div className="bg-cyan-500 px-4 py-1.5 rounded-md text-sm text-slate-200 hover:bg-slate-900 duration-500 ease-in">
+          <div className="bg-cyan-500 px-4 py-1.5 rounded-md text-sm text-slate-200 hover:bg-slate-900 duration-500 ease-in cursor-pointer">
             <span onClick={handleLoginModal}>Login</span>
           </div>
         )}
       </nav>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
